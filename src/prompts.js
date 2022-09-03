@@ -3,6 +3,21 @@ const Manager = require('../lib/Manager');
 const Engineer = require('../lib/Engineer');
 const Intern = require('../lib/Intern');
 
+let promptUser = () => {
+  // setup team array to recieve user prompts
+  let team = [];
+
+  return inquirer
+    .prompt(
+      // prompt user for manager info
+      teamInfo('manager')
+    )
+    .then(manager => {
+      team.push(new Manager(manager));
+      // prompt user to add employees
+      return addEmployees(team);
+    });
+}
 
 // GIVEN a command-line application that accepts user input
 // WHEN I am prompted for my team members and their information
@@ -51,22 +66,6 @@ let teamInfo = (type) => {
   }
 
   return questions;
-}
-
-let promptUser = () => {
-  // setup team array to recieve user prompts
-  team = [];
-
-  return inquirer
-    .prompt(
-      // prompt user for manager info
-      teamInfo('manager')
-    )
-    .then(manager => {
-      team.push(new Manager(manager));
-      // prompt user to add employees
-      return addEmployees(team);
-    });
 }
 
 let addEmployees = (team) => {
